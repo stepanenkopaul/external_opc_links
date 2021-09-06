@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html ng-app="OPCLinksReplaceApp">
+  <head>
+    <meta charset="utf-8">
+    <script src="lib/angular.min.js"></script>
+    <script src="src/app.js"></script>
+    <script src="x2js-master/xml2json.js"></script>
+    <script src="lib/sample.js"></script>
+    <title>OPC Links Replacer</title>
+  </head>
+  <body>
+    <h1>OPC Links Replacer</h1>
+    <div ng-controller="OPCLinksReplaceAppController">
+      <div>
+        <h1>Select text file</h1>
+        <input type="file" on-read-file="showContent($content)" />
+      </div>
+      
+      <div>
+        <button ng-click="convertXml2JSon()">XML => JSON</button>
+        <button ng-click="convertJSon2XML()">JSON => XML</button>   
+        <button ng-click="showDictionary()">Show dictionary</button>   
+        <button ng-click="expFile()">Export file</button>   
+      </div>
+
+      <div>        
+        <h4>XML:</h4>
+        <textarea cols="55" rows="15" ng-model="xmlArea"></textarea>
+        <!-- xml: {{xmlArea}} -->
+      </div>
+    
+      <div>
+        <h4>JSON:</h4>
+        <textarea cols="55" rows="15" ng-model="jsonArea"></textarea>
+        <!-- json: {{jsonArea}} -->
+      </div>  
+      
+      <div>
+        <h4>xml Result:</h4>
+        <textarea cols="55" rows="15" ng-model="xmlAreaResult"></textarea>
+        <!-- json: {{jsonArea}} -->
+      </div> 
+
+
+      <!-- <div ng-if="content">
+          <h2>File content is:</h2>
+          <pre>{{ content }}</pre>
+      </div> -->
+
+    </div>
+    
+    </div>
+  </body>
+
+
+
+</html>
