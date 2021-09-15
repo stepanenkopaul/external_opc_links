@@ -24,6 +24,7 @@
 
         $scope.convertXml2JSon = function()  {
             $scope.jsonArea = JSON.stringify(x2js.xml_str2json($scope.xmlArea));
+            console.log("xml=>json done");
         }
         $scope.convertJSon2XML = function()  {
             $scope.xmlArea = x2js.json2xml_str(JSON.parse($scope.jsonArea));
@@ -33,6 +34,20 @@
             $scope.content = content;
             $scope.xmlArea = content;
         };
+
+        $scope.add = function() {
+            var f = document.getElementById('file').files[0],
+                r = new FileReader();
+        
+            r.onloadend = function(e) {
+              var data = e.target.result;
+              //send your binary data via $http or $resource or do anything else with it
+              $scope.xmlArea = data;
+              console.log("add done");
+            }
+        
+            r.readAsBinaryString(f);
+        }
 
         function saveTextAsFile (data, filename){
 
@@ -77,7 +92,7 @@
 
             var jsonStructure = JSON.parse($scope.jsonArea);
 
-            console.log(jsonStructure);
+           // console.log(jsonStructure);
 
             function forechJSONTree(obj) {
                 for (let k in obj) {
@@ -87,7 +102,7 @@
                     // base case, stop recurring
                     if (k == "_plc_link"){
                         obj[k] = ConvertDefaultLinkToExternal(obj[k]);
-                        console.log(k + ":" + obj[k]);
+                        //console.log(k + ":" + obj[k]);
                         
                     }
                   }
@@ -127,65 +142,80 @@
                 
             
             // }
-
+            console.log("showDictionary done");
         }
 
-        function ConvertDefaultLinkToExternal(textDefault)
-			{
-				var textExternal = "";
-				try
-				{
-					if (!textDefault || !(textDefault.match(/PCs_Physical\.ProductCarriers\.ProductCarrier\[[0-9]{1,3}\]/) ||
-										  textDefault.match(/PCs_Physical_2\.ProductCarriers\.ProductCarrier\[[0-9]{1,3}\]/) ||
-										  textDefault.match(/PCs_Physical_3\.ProductCarriers\.ProductCarrier\[[0-9]{1,3}\]/) ||
-										  textDefault.match(/PCs_Physical_4\.ProductCarriers\.ProductCarrier\[[0-9]{1,3}\]/) ||
-										  textDefault.match(/PCs_Physical_5\.ProductCarriers\.ProductCarrier\[[0-9]{1,3}\]/) ||
-										  textDefault.match(/PCs_Physical_6\.ProductCarriers\.ProductCarrier\[[0-9]{1,3}\]/) ||
-										  textDefault.match(/PCs_Physical_7\.ProductCarriers\.ProductCarrier\[[0-9]{1,3}\]/)))
-					{
-						return textDefault || "";
-					}
-					
-					var textPC = "PC";
-					if (textDefault.match(/PCs_Physical\.ProductCarriers\.ProductCarrier\[[0-9]{1}\]/) ||
-						textDefault.match(/PCs_Physical_2\.ProductCarriers\.ProductCarrier\[[0-9]{1}\]/) ||
-						textDefault.match(/PCs_Physical_3\.ProductCarriers\.ProductCarrier\[[0-9]{1,3}\]/) ||
-						textDefault.match(/PCs_Physical_4\.ProductCarriers\.ProductCarrier\[[0-9]{1,3}\]/) ||
-						textDefault.match(/PCs_Physical_5\.ProductCarriers\.ProductCarrier\[[0-9]{1,3}\]/) ||
-						textDefault.match(/PCs_Physical_6\.ProductCarriers\.ProductCarrier\[[0-9]{1,3}\]/) ||
-						textDefault.match(/PCs_Physical_7\.ProductCarriers\.ProductCarrier\[[0-9]{1,3}\]/))
-					{
-						textPC += '00';
-					}
-					else if (textDefault.match(/PCs_Physical\.ProductCarriers\.ProductCarrier\[[0-9]{2}\]/) ||
-							textDefault.match(/PCs_Physical_2\.ProductCarriers\.ProductCarrier\[[0-9]{2}\]/) ||
-							textDefault.match(/PCs_Physical_3\.ProductCarriers\.ProductCarrier\[[0-9]{1,3}\]/) ||
-							textDefault.match(/PCs_Physical_4\.ProductCarriers\.ProductCarrier\[[0-9]{1,3}\]/) ||
-							textDefault.match(/PCs_Physical_5\.ProductCarriers\.ProductCarrier\[[0-9]{1,3}\]/) ||
-							textDefault.match(/PCs_Physical_6\.ProductCarriers\.ProductCarrier\[[0-9]{1,3}\]/) ||
-							textDefault.match(/PCs_Physical_7\.ProductCarriers\.ProductCarrier\[[0-9]{1,3}\]/))
-					{
-						textPC += '0';
-					}
-					
-					textExternal = textDefault.replace("PCs_Physical.ProductCarriers.ProductCarrier[", textPC);
-					textExternal = textExternal.replace("PCs_Physical_2.ProductCarriers.ProductCarrier[", textPC);
-					textExternal = textExternal.replace("PCs_Physical_3.ProductCarriers.ProductCarrier[", textPC);
-					textExternal = textExternal.replace("PCs_Physical_4.ProductCarriers.ProductCarrier[", textPC);
-					textExternal = textExternal.replace("PCs_Physical_5.ProductCarriers.ProductCarrier[", textPC);
-					textExternal = textExternal.replace("PCs_Physical_6.ProductCarriers.ProductCarrier[", textPC);
-					textExternal = textExternal.replace("PCs_Physical_7.ProductCarriers.ProductCarrier[", textPC);
-					
-					textExternal = textExternal.replace(/\[/g, ".[");
-					textExternal = textExternal.replace(/\./g, ".7:");
-					textExternal = textExternal.replace("].7:fbController", "://Root.Objects.5:fastCenter&.fastPLC.3:Resources.7:PC.1:Programs.7:PC.7:fbController");
-				}
-				catch(e)
-				{
-					alert("Error: " + e.description);
-				}
-				return textExternal;
-			}
+        function ConvertDefaultLinkToExternal(textDefault){
+                
+                
+            var textExternal = "";
+            
+            var plcResourceName         = "PCs_Physical";
+            var fbResourceName          = "ProductCarriers"; 
+            var repeatedPartName        = "ProductCarrier";
+            var linkVariablesContainer  = "fbController";
+
+            var reMatch = new RegExp(plcResourceName);
+
+            var repeatedPartsDictionary = {};
+            var tempRegExpDescription = "";
+            var counter = 0;
+            
+            var tempRegExpDescription  = plcResourceName + "\\." + fbResourceName + "\\."+ repeatedPartName +"\\[[0-9]{1}\\]";
+            repeatedPartsDictionary[counter] = {"regExp" : new RegExp(tempRegExpDescription), "prefix" : '00'};
+            counter++;
+
+            var tempRegExpDescription  = plcResourceName + "\\." + fbResourceName + "\\."+ repeatedPartName +"\\[[0-9]{2}\\]";
+            repeatedPartsDictionary[counter] = {"regExp" : new RegExp(tempRegExpDescription), "prefix" : '0'};
+
+
+            try
+            {
+
+
+                // rename PLC resources to template name
+                if (!textDefault || !textDefault.match(reMatch)){
+                    return textDefault || "";
+                }
+                else{
+                    textDefault = plcResourceName + "." + textDefault.substring(textDefault.indexOf(fbResourceName + "."), textDefault.length);
+            
+                }
+                
+                var textPC = "PC";
+
+               
+              
+
+                for(var key in repeatedPartsDictionary){
+                    //console.log(repeatedPartsDictionary[key]);
+
+                    if (repeatedPartsDictionary.hasOwnProperty(key)) {
+
+
+                        if (textDefault.match(repeatedPartsDictionary[key].regExp)){
+                            textPC += repeatedPartsDictionary[key].prefix;
+                        }
+                    } 
+                      
+                    
+
+
+
+                }
+                
+                textExternal = textDefault.replace(plcResourceName + "." + fbResourceName + "." + repeatedPartName + "[", textPC);
+                
+                textExternal = textExternal.replace(/\[/g, ".[");
+                textExternal = textExternal.replace(/\./g, ".7:");
+                textExternal = textExternal.replace("].7:" + linkVariablesContainer, "://Root.Objects.5:fastCenter&.fastPLC.3:Resources.7:PC.1:Programs.7:PC.7:" + linkVariablesContainer);
+            }
+            catch(e)
+            {
+                alert("Error: " + e.description);
+            }
+            return textExternal;
+        }
 
 
     };

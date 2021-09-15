@@ -11,35 +11,39 @@
   <body>
     <h1>OPC Links Replacer</h1>
     <div ng-controller="OPCLinksReplaceAppController">
-      <div>
+      <!-- <div>
         <h1>Select text file</h1>
         <input type="file" on-read-file="showContent($content)" />
-      </div>
+      </div> -->
       
       <div>
+
+        <input type="file" id="file" name="file"/>
+        <button ng-click="add()">Add</button>
+
         <button ng-click="convertXml2JSon()">XML => JSON</button>
-        <button ng-click="convertJSon2XML()">JSON => XML</button>   
+        <!-- <button ng-click="convertJSon2XML()">JSON => XML</button>    -->
         <button ng-click="showDictionary()">Show dictionary</button>   
         <button ng-click="expFile()">Export file</button>   
       </div>
 
-      <div>        
+      <!-- <div>        
         <h4>XML:</h4>
         <textarea cols="55" rows="15" ng-model="xmlArea"></textarea>
-        <!-- xml: {{xmlArea}} -->
+
       </div>
     
       <div>
         <h4>JSON:</h4>
         <textarea cols="55" rows="15" ng-model="jsonArea"></textarea>
-        <!-- json: {{jsonArea}} -->
+
       </div>  
       
       <div>
         <h4>xml Result:</h4>
         <textarea cols="55" rows="15" ng-model="xmlAreaResult"></textarea>
-        <!-- json: {{jsonArea}} -->
-      </div> 
+
+      </div>  -->
 
 
       <!-- <div ng-if="content">
