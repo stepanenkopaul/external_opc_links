@@ -2,57 +2,41 @@
 <html ng-app="OPCLinksReplaceApp">
   <head>
     <meta charset="utf-8">
-    <script src="lib/angular.min.js"></script>
+    <!-- library -->
+    <script src="lib/jquery-3.1.0.min.js"></script>
+    <script src="lib/angular/angular.min.js"></script>
+    <script src="lib/angular/angular-ui-router.min.js"></script>
+    <script src="lib/angular/angular-route.min.js"></script>
+    <script src="lib/x2js-master/xml2json.js"></script>
+
+    <!-- application -->
+    <!-- opc links replacer module call -->
     <script src="src/app.js"></script>
-    <script src="x2js-master/xml2json.js"></script>
-    <script src="lib/sample.js"></script>
+    
+    <!-- 'opc links replacer' module artifacts -->
+    <script src="src/opc link replacer/opcLinkReplacer.controller.js"></script>
+    <script src="src/opc link replacer/opcLinkReplacer.factory.js"></script>
+    
+    <!-- components -->
+    <script src="src/components/loadingSpinner.component.js"></script>
+    <script src="src/components/replaceResults.component.js"></script>
+
+    <!-- routes -->
+    <script src="src/routes/routes.config.js"></script>
+    <!-- css -->
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- <link rel="stylesheet" href="css/container.css"> -->
+    <link rel="stylesheet" href="css/buttons.css">
     <title>OPC Links Replacer</title>
   </head>
+
   <body>
-    <h1>OPC Links Replacer</h1>
-    <div ng-controller="OPCLinksReplaceAppController">
-      <!-- <div>
-        <h1>Select text file</h1>
-        <input type="file" on-read-file="showContent($content)" />
-      </div> -->
-      
-      <div>
+    <a href="#/!">Main</a>
+    <a href="#!settings">Settings</a>
+    <div ng-controller="OPCLinksReplaceAppController as controller">
 
-        <input type="file" id="file" name="file"/>
-        <button ng-click="add()">Add</button>
-
-        <button ng-click="convertXml2JSon()">XML => JSON</button>
-        <!-- <button ng-click="convertJSon2XML()">JSON => XML</button>    -->
-        <button ng-click="showDictionary()">Show dictionary</button>   
-        <button ng-click="expFile()">Export file</button>   
-      </div>
-
-      <!-- <div>        
-        <h4>XML:</h4>
-        <textarea cols="55" rows="15" ng-model="xmlArea"></textarea>
-
-      </div>
-    
-      <div>
-        <h4>JSON:</h4>
-        <textarea cols="55" rows="15" ng-model="jsonArea"></textarea>
-
-      </div>  
-      
-      <div>
-        <h4>xml Result:</h4>
-        <textarea cols="55" rows="15" ng-model="xmlAreaResult"></textarea>
-
-      </div>  -->
-
-
-      <!-- <div ng-if="content">
-          <h2>File content is:</h2>
-          <pre>{{ content }}</pre>
-      </div> -->
-
-    </div>
-    
+      <div ng-view></div>
+      <loading-spinner></loading-spinner>
     </div>
   </body>
 
