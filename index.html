@@ -26,20 +26,22 @@
     <!-- css -->
     <link rel="stylesheet" href="css/styles.css">
     <!-- <link rel="stylesheet" href="css/container.css"> -->
-    <link rel="stylesheet" href="css/buttons.css">
+    <!-- <link rel="stylesheet" href="css/buttons.css"> -->
+    <!-- <link rel="stylesheet" href="css/styles.scss"> -->
     <title>OPC Links Replacer</title>
   </head>
 
   <body>
+    <!-- tabs  -->
     <a href="#/!">Main</a>
     <a href="#!settings">Settings</a>
-    <div ng-controller="OPCLinksReplaceAppController as controller">
+ 
 
+     <!-- logic and controller -->
+    <div ng-controller="OPCLinksReplaceAppController as controller">
       <div ng-view></div>
       <loading-spinner></loading-spinner>
     </div>
   </body>
-
-
 
 </html>

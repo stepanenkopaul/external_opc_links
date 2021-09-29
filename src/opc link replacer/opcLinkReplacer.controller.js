@@ -8,9 +8,6 @@
 
     function OPCLinkReplaceAppController($rootScope, $element, $timeout, OPCLinkReplaceAppFactory) {
         
-        var warningElem = $element.find('div.error');
-        warningElem.slideDown(900);
-
         var controller          = this;
 
         // Use factory
