@@ -12,16 +12,21 @@
         return factory;
     }
 
+
     function OPCLinkReplaceAppService(){
         var service                     = this;
         var x2js                        = new X2JS();
 
-        service.replacedTagsAmount      = 0;
-        service.jsonArea                = "";
-        service.xmlArea                 = "";
-        service.xmlAreaResult           = "";
-        service.warningChooseTheFile    = false;
-        service.warningNoDataToExport   = false;
+        service.replacedTagsAmount          = 0;
+        service.jsonArea                    = "";
+        service.xmlArea                     = "";
+        service.xmlAreaResult               = "";
+        service.messageChooseTheFile        = false;
+        service.messageChooseTheFileText    = "";
+        service.messageNoDataToExport       = false;
+        service.messageNoDataToExportText   = "";
+        service.importedFileName            ="";
+        
   
         //----------- service functions
         service.returnReplacedTagsAmount = function(){
@@ -29,11 +34,15 @@
         }
 
         service.readFile = function(){
-            service.warningChooseTheFile        = false;
+            service.messageChooseTheFile        = false;
+            service.messageChooseTheFileText    = "";
+
             var f = document.getElementById('input__file').files[0], r = new FileReader();
           
+
             if(!f){
-                service.warningChooseTheFile    = true;
+                service.messageChooseTheFile    = true;
+                service.messageChooseTheFileText = "Choose the file!";
                 console.log("Choose the file");
                 return;
             }
@@ -51,9 +60,10 @@
 
 
         service.expFile = function(){
-            var fileName = "newfile001.xml";
+            var fileName = "newFIle001";
             service.xmlAreaResult = service.xmlAreaResult.replace(/\'/g, "\"");
-            saveTextAsFile(service.xmlAreaResult, fileName);
+            // saveTextAsFile(service.xmlAreaResult, fileName);
+            saveTextAsFile(service.xmlAreaResult);
             
         }
 
@@ -160,15 +170,26 @@
         }
 
         function saveTextAsFile (data, filename){
-            service.warningNoDataToExport   = false;
+            service.messageNoDataToExport   = false;
             if(!data) {
-                service.warningNoDataToExport   = true;
+                service.messageNoDataToExport       = true;
+                service.messageNoDataToExportText   = "There is no data to export!";
                 console.log('Console.save: No data')
                 return;
             }
             
-            if(!filename) filename = 'default.xml';
+            // add date to file name
+            var today = new Date();
+            var fileNameDate = "_" + today.toLocaleDateString() + "_" + today.toLocaleTimeString();
             
+
+            if((!filename) || (filename="")) filename = service.importedFileName;
+            
+            filename = filename.replace(/\.xml/g, "");
+            filename = filename + fileNameDate +".xml";
+
+
+
             var blob = new Blob([data], {type: 'text/plain'}),
                 e    = document.createEvent('MouseEvents'),
                 a    = document.createElement('a')
@@ -187,6 +208,11 @@
                     0, 0, 0, 0, 0, false, false, false, false, 0, null);
                 a.dispatchEvent(e);
             }
+
+            service.messageNoDataToExport       = true;
+            service.messageNoDataToExportText   = "File saved as " + filename;
+            var today = new Date().toDateString();   //  07-06-2016 06:38:34
+            console.log(today);
         }
 
     }

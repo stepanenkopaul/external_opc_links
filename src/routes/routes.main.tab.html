@@ -1,45 +1,63 @@
-  
-      <div>
-        
-
-        <table border="1">
-
-          <tr>
-            <td>
-              <div>
-                <input name="fidle" type="file" name="file" id="input__file">
-              </div>
-            </td>
-            <td>
-              <div>
-                <button ng-click="controller.convertLinks()">Convert link</button>
-                <div class= "warning" ng-if="controller.showWarningChooseTheFile()">CHOOSE THE FILE!</div>
-               </div>
-            </td>
-            <td>
-              <div>
-                <button ng-click="controller.exportFile()">Export file</button>
-                <div class= "warning" ng-if="controller.showWarningNoDataToExport()">NO DATA TO EXPORT!</div>
-                
-               </div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              
-            </td>
-            <td></td>
-            <td>
-              <replace-results></replace-results>
-              
-            </td>
-          </tr>
-        </table>
-
-        <div hidden="true">{{controller.returnReplacedTagsAmount()}}</div>
-       
-        
+<div>
+  <!-- SPN[It's for permanently return replaced tags amount, because on this moment I don't know how to do it another way] -->
+  <div hidden="true">{{controller.returnReplacedTagsAmount()}}</div>
  
-      </div>
+
+ 
+ <div>
+  <table width="100%">
+    <tr>
+      <th width="33%"><div class="p1">Choose the file</div></th>
+      <th width="33%"><div class="p1">Convert PLC links</div></th>
+      <th width="33%"><div class="p1">Export file</div></th>
+     </tr> 
+    <tr>
+      <td>
+
+        <label class="full-size-button">
+          <input type="file" id="input__file" onchange="angular.element(this).scope().fileName(this)"/>
+          <img src="/img/buttons/add.svg" class="center">
+      </label>
+      </td>
+      <td>
+        <label class="full-size-button" ng-click="controller.convertLinks()">
+          <img src="/img/buttons/convert.svg" class="center">
+        </label>
+  
+      </td>
+      <td>
+        <label class="full-size-button" ng-click="controller.exportFile()">
+          <img src="/img/buttons/export.svg" class="center">
+        </label>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div class="message">
+          <div class="p2">{{posterTitle}}</div>
+        </div>
+      </td>
+      <td>
+        <div class= "message" ng-if="controller.showMessageChooseTheFile()">
+          <div class="p2">{{controller.showMessageChooseTheFileText()}}</div>
+        </div>
+      </td>
+      <td>
+        <div class= "message" ng-if="controller.showMessageNoDataToExport()">
+          <div class="p2">{{controller.showMessageNoDataToExportText()}}</div>
+        </div>
+      </td>
+    </tr>
+    <!-- <tr>
+      <td></td>
+      <td></td>
+      <td><replace-results></replace-results></td>
+    </tr> -->
+   </table>
+ </div>
+
+
+
+</div>
 
       

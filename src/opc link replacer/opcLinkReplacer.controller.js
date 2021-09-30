@@ -2,28 +2,42 @@
     'use strict';
     
     angular.module('OPCLinksReplaceApp')
-    .controller('OPCLinksReplaceAppController', OPCLinkReplaceAppController);
+    .controller('OPCLinksReplaceAppController', OPCLinkReplaceAppController)
 
-    OPCLinkReplaceAppController.$inject = ['$rootScope','$element', '$timeout', 'OPCLinkReplaceAppFactory'];
+    OPCLinkReplaceAppController.$inject = ['$scope', '$rootScope','$element', '$timeout', 'OPCLinkReplaceAppFactory'];
 
-    function OPCLinkReplaceAppController($rootScope, $element, $timeout, OPCLinkReplaceAppFactory) {
+    function OPCLinkReplaceAppController($scope, $rootScope, $element, $timeout, OPCLinkReplaceAppFactory) {
         
-        var controller          = this;
+        var controller = this;
 
         // Use factory
         var factory = OPCLinkReplaceAppFactory();
         
-        controller.showWarningChooseTheFile = function(){
-            return factory.warningChooseTheFile;
+        controller.showMessageChooseTheFile = function(){
+            return factory.messageChooseTheFile;
         }
 
-        controller.showWarningNoDataToExport = function(){
-            return factory.warningNoDataToExport;
+        controller.showMessageChooseTheFileText = function(){
+            return factory.messageChooseTheFileText;
+        }
+
+        controller.showMessageNoDataToExport = function(){
+            return factory.messageNoDataToExport;
+        }
+
+        controller.showMessageNoDataToExportText = function(){
+            return factory.messageNoDataToExportText;
         }
 
         controller.returnReplacedTagsAmount = function(){
-            
             $rootScope.replacedTagsAmount = factory.replacedTagsAmount;
+        }
+
+        controller.resetMessages = function(){
+            factory.messageChooseTheFile        = false;
+            factory.messageChooseTheFileText    = "";
+            factory.messageNoDataToExport       = false;
+            factory.messageNoDataToExportText   = "";
         }
 
         controller.convertLinks = function(){
@@ -51,6 +65,11 @@
                     // convert json to xml
                     promises[2] = $timeout(function(){
                         factory.convertJSon2XML();
+
+                        if(factory.replacedTagsAmount != 0){
+                            factory.messageChooseTheFile        = true;
+                            factory.messageChooseTheFileText    = factory.replacedTagsAmount + " tags replaced";
+                        }
                         
                     }, 100);
 
@@ -58,6 +77,8 @@
                     promises[2].then(function(){
                         $rootScope.$broadcast('Spinner:on', {on: false});
                     });
+
+                    
 
                 });
             });
@@ -67,6 +88,16 @@
         controller.exportFile = function(){
             factory.expFile();
         }
+
+        // scope functions
+        $scope.fileName= function(element) {
+            $scope.$apply(function($scope) {
+                $scope.posterTitle = element.files[0].name;
+                factory.importedFileName = $scope.posterTitle;
+                controller.resetMessages();
+
+            });
+         };
 
 
 

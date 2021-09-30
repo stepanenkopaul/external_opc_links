@@ -12,8 +12,7 @@
       var controller = this;
       
       var cancelListener = $rootScope.$on('Spinner:on', function (event, data) {
-        //console.log("Event: ", event);
-        //console.log("Data: ", data);
+
       
         if (data.on) {
           controller.showSpinner = true;

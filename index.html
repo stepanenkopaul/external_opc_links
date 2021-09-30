@@ -25,23 +25,30 @@
     <script src="src/routes/routes.config.js"></script>
     <!-- css -->
     <link rel="stylesheet" href="css/styles.css">
-    <!-- <link rel="stylesheet" href="css/container.css"> -->
-    <!-- <link rel="stylesheet" href="css/buttons.css"> -->
-    <!-- <link rel="stylesheet" href="css/styles.scss"> -->
+
     <title>OPC Links Replacer</title>
   </head>
 
   <body>
-    <!-- tabs  -->
-    <a href="#/!">Main</a>
-    <a href="#!settings">Settings</a>
- 
-
-     <!-- logic and controller -->
+    <!-- Tab links -->
+    <div >
+      <div>
+        <button onclick="location.href='#/!main';" ng-class="{'active-tab': currentTab =='/main', 'unactive-tab': currentTab !='/main'}">
+          <div class="p1">Main</div>
+        </button>
+        <button onclick="location.href='#!settings';" ng-class="{'active-tab': currentTab =='/settings', 'unactive-tab': currentTab !='/settings'}">
+          <div class="p1">Settings</div>
+        </button>
+    </div>
+    </div>
+    <!-- logic and controller -->
     <div ng-controller="OPCLinksReplaceAppController as controller">
       <div ng-view></div>
       <loading-spinner></loading-spinner>
-    </div>
+    </div>  
+
+    
+
   </body>
 
 </html>
