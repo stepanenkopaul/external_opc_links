@@ -1,1 +1,97 @@
-<div>This is TAB 2 content</div>
+
+<div>
+
+    <table width="100%">
+        <tr>
+          <th width="25%"><div class="p1"></div></th>
+          <th width="25%"><div class="p1"></div></th>
+          <th width="25%"><div class="p1"></div></th>
+          <th width="25%"><div class="p1"></div></th>
+         </tr>
+        <!-- 1 row -->
+        <tr>
+            <td>settings_plcResourceName</td>
+            <td>
+                <div>
+                    <input type="text" ng-model="controller.settings_plcResourceName" ng-keyup="controller.updateSettingsPlcResourceName();"> 
+                </div>
+            </td>
+            <td>settings_externalSourcePrefixName</td>
+            <td>
+                <div>
+                    <input type="text" ng-model="controller.settings_externalSourcePrefixName" ng-keyup="controller.updateSettingsExternalSourcePrefixName();"> 
+                </div>
+            </td>
+        </tr>
+        <!-- 2 row -->
+        <tr>
+            <td>settings_fbResourceName</td>
+            <td>
+                <div>
+                    <input type="text" ng-model="controller.settings_fbResourceName" ng-keyup="controller.updateSettingsFbResourceName();"> 
+                </div>
+            </td>
+            <td>settings_externalLinkResource</td>
+            <td>
+                <div>
+                    <input type="text" ng-model="controller.settings_externalLinkResource" ng-keyup="controller.updateSettingsPlcResourceName();"> 
+                </div>
+            </td>
+        </tr>
+        <!-- row 3 -->
+        <tr>
+            <td>settings_repeatedPartName</td>
+            <td>
+                <div>
+                    <input type="text" ng-model="controller.settings_repeatedPartName" ng-keyup="controller.updateSettingsRepeatedPartName();"> 
+                </div>
+            </td>
+            <td>settings_delimiterPattern</td>
+            <td>
+                <div>
+                    <input type="text" ng-model="controller.settings_delimiterPattern" ng-keyup="controller.updateSettingsDelimiterPattern();"> 
+                </div>
+            </td>
+        </tr>
+        <!-- row 4 -->
+        <tr>
+            <td>settings_linkVariablesContainer</td>
+            <td>
+                <div>
+                    <input type="text" ng-model="controller.settings_linkVariablesContainer" ng-keyup="controller.updateSettingsLinkVariablesContainer();"> 
+                </div>
+            </td>
+            <td>3</td>
+            <td>4</td>
+        </tr>
+
+        <tr>
+            <td>settings_fileName</td>
+            <td>
+                <div>
+                    <input type="text" ng-model="controller.settings_fileName" ng-keyup="controller.updateSettingsFileName();"> 
+                </div>
+            </td>
+            <td>3</td>
+            <td>4</td>
+        </tr>
+    </table>
+    
+
+    
+
+    
+
+    
+    
+    
+    <div class="p1">
+        {{controller.settings_plcResourceName}}.{{controller.settings_fbResourceName}}.{{controller.settings_repeatedPartName}}{{controller.example_pcNumInArray}}.{{controller.settings_linkVariablesContainer}}.{{controller.example_defaultTagName}}
+    </div>
+    <p></p>
+    <div class="p1">
+        {{controller.example_replacedPCNum}}{{controller.settings_externalLinkResource}}{{controller.example_replacedTagName}}    
+    </div>
+
+    
+</div>

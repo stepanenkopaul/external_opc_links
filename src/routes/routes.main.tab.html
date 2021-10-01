@@ -15,18 +15,18 @@
       <td>
 
         <label class="full-size-button">
-          <input type="file" id="input__file" onchange="angular.element(this).scope().fileName(this)"/>
+          <input type="file" id="input__file" onchange="angular.element(this).scope().fileName(this);"/>
           <img src="img/buttons/add.svg" class="center"/> 
       </label>
       </td>
       <td>
-        <label class="full-size-button" ng-click="controller.convertLinks()">
+        <label class="full-size-button" ng-click="controller.convertLinks();">
           <img src="img/buttons/convert.svg" class="center"/> 
         </label>
   
       </td>
       <td>
-        <label class="full-size-button" ng-click="controller.exportFile()">
+        <label class="full-size-button" ng-click="controller.exportFile();">
           <img src="img/buttons/export.svg" class="center"/>
         </label>
       </td>
@@ -38,12 +38,12 @@
         </div>
       </td>
       <td>
-        <div class= "message" ng-if="controller.showMessageChooseTheFile()">
+        <div class= "message" ng-if="controller.showMessageChooseTheFile();">
           <div class="p2">{{controller.showMessageChooseTheFileText()}}</div>
         </div>
       </td>
       <td>
-        <div class= "message" ng-if="controller.showMessageNoDataToExport()">
+        <div class= "message" ng-if="controller.showMessageNoDataToExport();">
           <div class="p2">{{controller.showMessageNoDataToExportText()}}</div>
         </div>
       </td>

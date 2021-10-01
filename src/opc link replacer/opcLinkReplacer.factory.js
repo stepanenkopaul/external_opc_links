@@ -14,19 +14,27 @@
 
 
     function OPCLinkReplaceAppService(){
-        var service                     = this;
-        var x2js                        = new X2JS();
+        var service                         = this;
+        var x2js                            = new X2JS();
 
-        service.replacedTagsAmount          = 0;
-        service.jsonArea                    = "";
-        service.xmlArea                     = "";
-        service.xmlAreaResult               = "";
-        service.messageChooseTheFile        = false;
-        service.messageChooseTheFileText    = "";
-        service.messageNoDataToExport       = false;
-        service.messageNoDataToExportText   = "";
-        service.importedFileName            ="";
-        
+        service.replacedTagsAmount            = 0;
+        service.jsonArea                      = "";
+        service.xmlArea                       = "";
+        service.xmlAreaResult                 = "";
+        service.messages_ChooseTheFile        = false;
+        service.messages_ChooseTheFileText    = "";
+        service.messages_NoDataToExport       = false;
+        service.messages_NoDataToExportText   = "";
+        service.messages_importedFileName     = "";
+   
+        service.settings_plcResourceName             = "";
+        service.settings_fbResourceName              = ""; 
+        service.settings_repeatedPartName            = "";
+        service.settings_linkVariablesContainer      = "";
+        service.settings_externalSourcePrefixName    = "";
+        service.settings_delimiterPattern            = "";
+        service.settings_externalLinkResource        = "";
+        service.settings_fileName                    = "";
   
         //----------- service functions
         service.returnReplacedTagsAmount = function(){
@@ -34,21 +42,21 @@
         }
 
         service.readFile = function(){
-            service.messageChooseTheFile        = false;
-            service.messageChooseTheFileText    = "";
+            service.messages_ChooseTheFile        = false;
+            service.messages_ChooseTheFileText    = "";
 
             var f = document.getElementById('input__file').files[0], r = new FileReader();
           
 
             if(!f){
-                service.messageChooseTheFile    = true;
-                service.messageChooseTheFileText = "Choose the file!";
+                service.messages_ChooseTheFile      = true;
+                service.messages_ChooseTheFileText  = "Choose the file!";
                 console.log("Choose the file");
                 return;
             }
             r.onloadend = function(e) {
                 var data = e.target.result;
-                //send your binary data via $http or $resource or do anything else with it
+                
                 service.xmlArea = data;
                 
             }
@@ -60,10 +68,11 @@
 
 
         service.expFile = function(){
-            var fileName = "newFIle001";
+            var fileName = service.settings_fileName;
+
             service.xmlAreaResult = service.xmlAreaResult.replace(/\'/g, "\"");
-            // saveTextAsFile(service.xmlAreaResult, fileName);
-            saveTextAsFile(service.xmlAreaResult);
+            saveTextAsFile(service.xmlAreaResult, fileName);
+            
             
         }
 
@@ -102,27 +111,31 @@
         
         function ConvertDefaultLinkToExternal(textDefault){
             
-            var textExternal = "";
+            var textExternal                = "";
               
-            var plcResourceName             = "PCs_Physical";
-            var fbResourceName              = "ProductCarriers"; 
-            var repeatedPartName            = "ProductCarrier";
-            var linkVariablesContainer      = "fbController";
-            var externalSourcePrefixName    = "PC";
+            var plcResourceName             = service.settings_plcResourceName;
+            var fbResourceName              = service.settings_fbResourceName; 
+            var repeatedPartName            = service.settings_repeatedPartName;
+            var linkVariablesContainer      = service.settings_linkVariablesContainer;
+            var externalSourcePrefixName    = service.settings_externalSourcePrefixName;
+            var delimiterPattern            = service.settings_delimiterPattern;
+            var externalLinkResource        = service.settings_externalLinkResource;
 
             var reMatch = new RegExp(plcResourceName);
   
-            var repeatedPartsDictionary = {};
-            var tempRegExpDescription = "";
-            var counter = 0;
+            var repeatedPartsDictionary         = {};
+            var tempRegExpDescription           = "";
+            var counter                         = 0;
               
-            var tempRegExpDescription  = plcResourceName + "\\." + fbResourceName + "\\."+ repeatedPartName +"\\[[0-9]{1}\\]";
-            repeatedPartsDictionary[counter] = {"regExp" : new RegExp(tempRegExpDescription), "prefix" : '00'};
+            var tempRegExpDescription           = plcResourceName + "\\." + fbResourceName + "\\."+ repeatedPartName +"\\[[0-9]{1}\\]";
+            repeatedPartsDictionary[counter]    = {"regExp" : new RegExp(tempRegExpDescription), "prefix" : '00'};
             counter++;
   
-            var tempRegExpDescription  = plcResourceName + "\\." + fbResourceName + "\\."+ repeatedPartName +"\\[[0-9]{2}\\]";
-            repeatedPartsDictionary[counter] = {"regExp" : new RegExp(tempRegExpDescription), "prefix" : '0'};
-  
+            var tempRegExpDescription           = plcResourceName + "\\." + fbResourceName + "\\."+ repeatedPartName +"\\[[0-9]{2}\\]";
+            repeatedPartsDictionary[counter]    = {"regExp" : new RegExp(tempRegExpDescription), "prefix" : '0'};
+            counter++;
+
+
             try
             {
   
@@ -157,8 +170,8 @@
                 textExternal = textDefault.replace(plcResourceName + "." + fbResourceName + "." + repeatedPartName + "[", textPC);
                   
                 textExternal = textExternal.replace(/\[/g, ".[");
-                textExternal = textExternal.replace(/\./g, ".7:");
-                textExternal = textExternal.replace("].7:" + linkVariablesContainer, "://Root.Objects.5:fastCenter&.fastPLC.3:Resources.7:PC.1:Programs.7:PC.7:" + linkVariablesContainer);
+                textExternal = textExternal.replace(/\./g, delimiterPattern);
+                textExternal = textExternal.replace("]" + delimiterPattern + linkVariablesContainer, externalLinkResource + linkVariablesContainer);
             
                 
             }
@@ -172,8 +185,8 @@
         function saveTextAsFile (data, filename){
             service.messageNoDataToExport   = false;
             if(!data) {
-                service.messageNoDataToExport       = true;
-                service.messageNoDataToExportText   = "There is no data to export!";
+                service.messages_NoDataToExport       = true;
+                service.messages_NoDataToExportText   = "There is no data to export!";
                 console.log('Console.save: No data')
                 return;
             }
@@ -182,9 +195,13 @@
             var today = new Date();
             var fileNameDate = "_" + today.toLocaleDateString() + "_" + today.toLocaleTimeString();
             
+            console.log("filename1: " + filename);
 
-            if((!filename) || (filename="")) filename = service.importedFileName;
+            if((!filename)) filename = service.messages_importedFileName;
             
+            console.log("filename2: " + filename);
+            console.log("filename2: " + service.messages_importedFileName);
+
             filename = filename.replace(/\.xml/g, "");
             filename = filename + fileNameDate +".xml";
 
@@ -209,8 +226,8 @@
                 a.dispatchEvent(e);
             }
 
-            service.messageNoDataToExport       = true;
-            service.messageNoDataToExportText   = "File saved as " + filename;
+            service.messages_NoDataToExport       = true;
+            service.messages_NoDataToExportText   = "File saved as " + filename;
             var today = new Date().toDateString();   //  07-06-2016 06:38:34
             console.log(today);
         }
