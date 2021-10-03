@@ -2,16 +2,21 @@ body{
   background-color:rgba(156, 160, 156, 0.219);
 }
 
-table {
-  /* border: none; */
+.table_without_border {
+  border: none;
+  /* border: 1px solid grey;
+  border-collapse:collapse; */
+}
+
+.table_with_border {
   border: 1px solid grey;
   border-collapse:collapse;
 }
 td, th {
   /* font-size: 100%; */
-  /* border: none;  */
-  border: 1px solid grey;
-  border-collapse:collapse;
+  border: none; 
+  /* border: 1px solid grey;
+  border-collapse:collapse; */
 }
 
 input[type="file"] {
@@ -122,6 +127,19 @@ input[type="text"]{
   font-family: "Times New Roman", Times, serif;
   font-size: 16px;
 }
+
+.focus{
+  font-family: "Times New Roman", Times, serif;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.blur{
+  font-family: "Times New Roman", Times, serif;
+  font-size: 20px;
+  font-weight: normal;
+}
+
 
 
 

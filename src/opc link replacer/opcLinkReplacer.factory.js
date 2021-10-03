@@ -35,7 +35,10 @@
         service.settings_delimiterPattern            = "";
         service.settings_externalLinkResource        = "";
         service.settings_fileName                    = "";
-  
+
+        service.settings_oneDigitPrefix             = "";
+        service.settings_twoDigitPrefix             = "";
+
         //----------- service functions
         service.returnReplacedTagsAmount = function(){
             return service.replacedTagsAmount;
@@ -128,11 +131,11 @@
             var counter                         = 0;
               
             var tempRegExpDescription           = plcResourceName + "\\." + fbResourceName + "\\."+ repeatedPartName +"\\[[0-9]{1}\\]";
-            repeatedPartsDictionary[counter]    = {"regExp" : new RegExp(tempRegExpDescription), "prefix" : '00'};
+            repeatedPartsDictionary[counter]    = {"regExp" : new RegExp(tempRegExpDescription), "prefix" : service.settings_oneDigitPrefix};
             counter++;
   
             var tempRegExpDescription           = plcResourceName + "\\." + fbResourceName + "\\."+ repeatedPartName +"\\[[0-9]{2}\\]";
-            repeatedPartsDictionary[counter]    = {"regExp" : new RegExp(tempRegExpDescription), "prefix" : '0'};
+            repeatedPartsDictionary[counter]    = {"regExp" : new RegExp(tempRegExpDescription), "prefix" : service.settings_twoDigitPrefix};
             counter++;
 
 
