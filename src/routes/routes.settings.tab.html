@@ -19,7 +19,7 @@
                     ng-blur="controller.blurPlcResourceName();"> 
                 </div>
             </td>
-            <td>{{controller.description_externalSourcePrefixName}}</td>
+            <td ng-class="{'focus': controller.selected_externalSourcePrefixName, 'blur': !controller.selected_externalSourcePrefixName}">{{controller.description_externalSourcePrefixName}}</td>
             <td>
                 <div>
                     <input type="text" ng-model="controller.settings_externalSourcePrefixName" 
@@ -40,7 +40,7 @@
                     ng-blur="controller.blurFbResourceName();"> 
                 </div>
             </td>
-            <td>{{controller.description_externalLinkResource}}</td>
+            <td ng-class="{'focus': controller.selected_externalLinkResource, 'blur': !controller.selected_externalLinkResource}">{{controller.description_externalLinkResource}}</td>
             <td>
                 <div>
                     <input type="text" ng-model="controller.settings_externalLinkResource" 
@@ -52,7 +52,7 @@
         </tr>
         <!-- row 3 -->
         <tr>
-            <td>{{controller.description_repeatedPartName}}</td>
+            <td ng-class="{'focus': controller.selected_repeatedPartName, 'blur': !controller.selected_repeatedPartName}">{{controller.description_repeatedPartName}}</td>
             <td>
                 <div>
                     <input type="text" ng-model="controller.settings_repeatedPartName" 
@@ -61,7 +61,7 @@
                     ng-blur="controller.blurRepeatedPartName();"> 
                 </div>
             </td>
-            <td>{{controller.description_delimiterPattern}}</td>
+            <td ng-class="{'focus': controller.selected_delimiterPattern, 'blur': !controller.selected_delimiterPattern}">{{controller.description_delimiterPattern}}</td>
             <td>
                 <div>
                     <input type="text" ng-model="controller.settings_delimiterPattern" 
@@ -73,7 +73,7 @@
         </tr>
         <!-- row 4 -->
         <tr>
-            <td>{{controller.description_linkVariablesContainer}}</td>
+            <td ng-class="{'focus': controller.selected_linkVariablesContainer, 'blur': !controller.selected_linkVariablesContainer}">{{controller.description_linkVariablesContainer}}</td>
             <td>
                 <div>
                     <input type="text" ng-model="controller.settings_linkVariablesContainer" 
@@ -82,7 +82,7 @@
                     ng-blur="controller.blurLinkVariablesContainer();"> 
                 </div>
             </td>
-            <td>{{controller.description_oneDigitPrefix}}</td>
+            <td ng-class="{'focus': controller.selected_oneDigitPrefix, 'blur': !controller.selected_oneDigitPrefix}">{{controller.description_oneDigitPrefix}}</td>
             <td>
                 <div>
                     <input type="text" ng-model="controller.settings_oneDigitPrefix" 
@@ -94,7 +94,7 @@
         </tr>
 
         <tr>
-            <td>{{controller.description_fileName}}</td>
+            <td ng-class="{'focus': controller.selected_fileName, 'blur': !controller.selected_fileName}">{{controller.description_fileName}}</td>
             <td>
                 <div>
                     <input type="text" ng-model="controller.settings_fileName" 
@@ -103,7 +103,7 @@
                     ng-blur="controller.blurFileName();"> 
                 </div>
             </td>
-            <td>{{controller.description_twoDigitPrefix}}</td>
+            <td ng-class="{'focus': controller.selected_twoDigitPrefix, 'blur': !controller.selected_twoDigitPrefix}">{{controller.description_twoDigitPrefix}}</td>
             <td>
                 <div>
                     <input type="text" ng-model="controller.settings_twoDigitPrefix" 

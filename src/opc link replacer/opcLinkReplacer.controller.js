@@ -18,7 +18,7 @@
             controller.description_plcResourceName             = "PLC resource name";
             controller.description_fbResourceName              = "FB resource name";
             controller.description_repeatedPartName            = "Repeated part";
-            controller.description_linkVariablesContainer      = "Link variables container (interface location)";
+            controller.description_linkVariablesContainer      = "Link variables container";
             controller.description_externalSourcePrefixName    = "External source prefix name";
             controller.description_delimiterPattern            = "Delimiter pattern";
             controller.description_externalLinkResource        = "External resource pattern";
