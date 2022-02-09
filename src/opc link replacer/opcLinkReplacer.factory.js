@@ -81,6 +81,11 @@
 
         service.convertXml2JSon = function(){
             service.jsonArea = JSON.stringify(x2js.xml_str2json(service.xmlArea));
+
+            console.log("before");
+            var jsonStructure           = JSON.parse(service.jsonArea);
+            console.log(jsonStructure);
+
             console.log("xml=>json done");
             return true;
         }
@@ -89,8 +94,11 @@
             var jsonStructure           = JSON.parse(service.jsonArea);
             service.replacedTagsAmount  = 0;
 
+
             forechJSONEquipmentTree(jsonStructure);
             service.xmlAreaResult       = x2js.json2xml_str(jsonStructure);
+            console.log("after");
+            console.log(jsonStructure);
             console.log("json=>xml done");
             return true;
             
@@ -104,8 +112,15 @@
                 } else {
                     // base case, stop recurring
                     if (k == "_plc_link"){
-                        obj[k] = ConvertDefaultLinkToExternal(obj[k]);
                         
+                        // convert only tags, not structures
+                        if(obj[k].toString().includes('.InterfaceInput.') || obj[k].toString().includes('.InterfaceOutput.')){
+                            console.log("obj[k]= " + obj[k]);
+                            obj[k] = ConvertDefaultLinkToExternal(obj[k]);
+                            
+                        }
+
+                    
 
                     }
                 }
@@ -114,6 +129,26 @@
         
         function ConvertDefaultLinkToExternal(textDefault){
             
+            try{
+                var tag = textDefault;//"PC001.ProductCarrier.fbController.InterfaceInput.SelectProgram.udnProgramID";
+                var pcPrefix = "";
+                if (tag.match(/PC[0-9]{3}/)){
+                    pcPrefix = tag.replace("ProductCarrier.", "");
+
+                    service.replacedTagsAmount = service.replacedTagsAmount + 1;
+                }
+
+
+                pcPrefix = pcPrefix.replace(/\./g, ".7:");
+                pcPrefix = pcPrefix.replace(".7:fbController", "://Root.Objects.5:fastCenter&.fastPLC.3:Resources.7:PC.1:Programs.7:PC.7:fbController");
+                
+            }
+            catch(e){
+                alert("Error: " + e.description);
+            }
+            return pcPrefix;//textExternal;
+
+            /*
             var textExternal                = "";
               
             var plcResourceName             = service.settings_plcResourceName;
@@ -183,6 +218,7 @@
                 alert("Error: " + e.description);
             }
             return textExternal;
+            */
         }
 
         function saveTextAsFile (data, filename){
