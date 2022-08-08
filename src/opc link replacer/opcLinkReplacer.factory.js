@@ -140,6 +140,7 @@
 
 
                 pcPrefix = pcPrefix.replace(/\./g, ".7:");
+                pcPrefix = pcPrefix.replace(/\[/g, ".7:[");
                 pcPrefix = pcPrefix.replace(".7:fbController", "://Root.Objects.5:fastCenter&.fastPLC.3:Resources.7:PC.1:Programs.7:PC.7:fbController");
                 
             }
