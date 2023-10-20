@@ -147,79 +147,9 @@
             catch(e){
                 alert("Error: " + e.description);
             }
-            return pcPrefix;//textExternal;
-
-            /*
-            var textExternal                = "";
-              
-            var plcResourceName             = service.settings_plcResourceName;
-            var fbResourceName              = service.settings_fbResourceName; 
-            var repeatedPartName            = service.settings_repeatedPartName;
-            var linkVariablesContainer      = service.settings_linkVariablesContainer;
-            var externalSourcePrefixName    = service.settings_externalSourcePrefixName;
-            var delimiterPattern            = service.settings_delimiterPattern;
-            var externalLinkResource        = service.settings_externalLinkResource;
-
-            var reMatch = new RegExp(plcResourceName);
-  
-            var repeatedPartsDictionary         = {};
-            var tempRegExpDescription           = "";
-            var counter                         = 0;
-              
-            var tempRegExpDescription           = plcResourceName + "\\." + fbResourceName + "\\."+ repeatedPartName +"\\[[0-9]{1}\\]";
-            repeatedPartsDictionary[counter]    = {"regExp" : new RegExp(tempRegExpDescription), "prefix" : service.settings_oneDigitPrefix};
-            counter++;
-  
-            var tempRegExpDescription           = plcResourceName + "\\." + fbResourceName + "\\."+ repeatedPartName +"\\[[0-9]{2}\\]";
-            repeatedPartsDictionary[counter]    = {"regExp" : new RegExp(tempRegExpDescription), "prefix" : service.settings_twoDigitPrefix};
-            counter++;
+            return pcPrefix;
 
 
-            try
-            {
-  
-                // rename PLC resources to template name
-                if (!textDefault || !textDefault.match(reMatch)){
-                    return textDefault || "";
-                }
-                else{
-                    textDefault = plcResourceName + "." + textDefault.substring(textDefault.indexOf(fbResourceName + "."), textDefault.length);
-              
-                }
-                  
-                var textPC = externalSourcePrefixName;
-  
-                 
-                for(var key in repeatedPartsDictionary){
-  
-                    if (repeatedPartsDictionary.hasOwnProperty(key)) {
-  
-  
-                        if (textDefault.match(repeatedPartsDictionary[key].regExp)){
-                             textPC += repeatedPartsDictionary[key].prefix;
-
-                             // count tags
-                            service.replacedTagsAmount = service.replacedTagsAmount + 1;
-                        }
-                    } 
-                        
-  
-                }
-                  
-                textExternal = textDefault.replace(plcResourceName + "." + fbResourceName + "." + repeatedPartName + "[", textPC);
-                  
-                textExternal = textExternal.replace(/\[/g, ".[");
-                textExternal = textExternal.replace(/\./g, delimiterPattern);
-                textExternal = textExternal.replace("]" + delimiterPattern + linkVariablesContainer, externalLinkResource + linkVariablesContainer);
-            
-                
-            }
-            catch(e)
-            {
-                alert("Error: " + e.description);
-            }
-            return textExternal;
-            */
         }
 
         function saveTextAsFile (data, filename){
