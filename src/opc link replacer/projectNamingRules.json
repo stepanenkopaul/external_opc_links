@@ -1,0 +1,31 @@
+{
+    "projects": [
+        {
+            "name": "G-Plate",
+            "searchMarkers": [
+                ".Transporters."
+            ],
+            "resourceNameTo": "Transporter",
+            "resourceNameFrom": "TransporterPLC",
+            "resourceNameInSAP": "TransporterPLC",
+            "programName":"Transporters",
+            "regExp": "(?:TransporterPLC.*)\\.Transporters\\.",
+            "removedPart":"Transporters.",
+            "rootFBName": "fbTransporter"
+        },
+        {
+            "name": "DynaSmart",
+            "searchMarkers": [
+                ".ProductCarrier.fbController.InterfaceInput.",
+                ".ProductCarrier.fbController.InterfaceOutput."
+            ],
+            "resourceNameTo": "PC",
+            "resourceNameFrom": "PC",
+            "resourceNameInSAP": "PC",
+            "programName":"PC",
+            "regExp": "(?:PC.*)\\.ProductCarrier\\.",
+            "removedPart":"ProductCarrier.",
+            "rootFBName": "fbController"
+        }
+    ]
+}

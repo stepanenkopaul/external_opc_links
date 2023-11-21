@@ -8,14 +8,14 @@
     function RoutesConfig($routeProvider) {
 
         $routeProvider
-        .when("/main", {
-            templateUrl : "src/routes/routes.main.tab.html",
-            activetab: 'main',
-            controller: routesController
-        })
         .when("/settings", {
             templateUrl : "src/routes/routes.settings.tab.html",
             activetab: 'settings',
+            controller: routesController
+        })
+        .when("/main", {
+            templateUrl : "src/routes/routes.main.tab.html",
+            activetab: 'main',
             controller: routesController
         })
         .otherwise({

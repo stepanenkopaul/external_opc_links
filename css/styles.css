@@ -142,4 +142,14 @@ input[type="text"]{
 
 
 
-
+.custom-select {
+  text-align: center;
+  width: 100%; /* Makes the select fill its container horizontally */
+  height: 100%;
+  padding: 20px; /* Adds padding for better appearance */
+  border: 1px solid #ccc; /* Defines a border for the select */
+  border-radius: 4px; /* Rounds the corners of the select */
+  box-sizing: border-box; /* Includes padding and border in the width */
+  font-size: 20px; /* Adjust font size as needed */
+  /* Add any other desired styles */
+}
